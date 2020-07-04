@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Noughts and Crosses (2 Player Version)</title>
+	<script src="javascript/noughts.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/noughts.css">
+</head>
+<body>
+	<div id="gameBoard">
+		<div class="gameRow">
+			<div class="gameSquare" onClick="chooseCell('topLeft')" id="topLeft"></div>
+			<div class="gameSquare" onClick="chooseCell('topCentre')" id="topCentre"></div>
+			<div class="gameSquare" onClick="chooseCell('topRight')" id="topRight"></div>
+		</div>
+		<div class="gameRow">
+				<div class="gameSquare" onClick="chooseCell('middleLeft')" id="middleLeft"></div>
+				<div class="gameSquare" onClick="chooseCell('middleCentre')" id="middleCentre"></div>
+				<div class="gameSquare" onClick="chooseCell('middleRight')" id="middleRight"></div>
+		</div>
+		<div class="gameRow">
+				<div class="gameSquare" onClick="chooseCell('bottomLeft')" id="bottomLeft"></div>
+				<div class="gameSquare" onClick="chooseCell('bottomCentre')" id="bottomCentre"></div>
+				<div class="gameSquare" onClick="chooseCell('bottomRight')" id="bottomRight"></div>
+		</div>
+		<div class="gameRow">
+			<div id="label">Player 1</div>
+		</div>
+	</div>
+</body>
+</html>

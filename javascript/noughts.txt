@@ -1,0 +1,138 @@
+var currentPlayer = 1;
+
+var emptySquare = 0;
+var noughtSquare = 1;
+var crossSquare = 2;
+
+var emptyImage = "url(img/empty.png)";
+var noughtImage = "url(img/nought.png)";
+var crossImage = "url(img/cross.png)";
+
+var winningNoughtImage = "url(img/winningNought.png)";
+var winningCrossImage = "url(img/winningCross.png)";
+
+var basicImages =[emptyImage, crossImage, noughtImage];
+var winningImages =[emptyImage, winningCrossImage, winningNoughtImage];
+
+var boardTracker = { 
+	"topLeft": 0, 
+	"topCentre": 0, 
+	"topRight": 0, 
+	"middleLeft": 0, 
+	"middleCentre": 0, 
+	"middleRight": 0, 
+	"bottomLeft": 0, 
+	"bottomCentre": 0, 
+	"bottomRight": 0, 
+}; 
+
+// Changing cells
+function selectCell(cell) {
+		if (boardTracker[cell] == 0) {
+			document.getElementById(cell).style.backgroundImage=basicImages[currentPlayer];
+			boardTracker[cell] = currentPlayer;
+			checkForWin();
+			switchPlayer();
+		}
+	}
+
+function winningCell(cell) {
+	document.getElementById(cell).style.backgroundImage=winningImages[currentPlayer];
+}
+
+function switchPlayer() {
+	switch (currentPlayer) {
+		case 1:
+			currentPlayer = 2;
+			break;
+		case 2:
+			currentPlayer = 1;
+			break;
+    }
+	displayPlayer();
+}
+
+function displayPlayer() {
+	if (currentPlayer != 3) {
+        document.getElementById("label").innerHTML = "Player: " + currentPlayer;
+    }
+}
+
+// Checking for winning criteria
+function checkForWin() {
+	checkHorizontalWin();
+	checkVerticalWin();
+	checkDiagonalWin();
+}
+
+function checkDiagonalWin() {
+	checkForwardSlash();
+	checkBackSlash();
+}
+
+function checkHorizontalWin() {
+	checkTopRow();
+	checkMiddleRow();
+	checkBottomRow();
+}
+
+function checkVerticalWin() {
+	checkLeftColumn();
+	checkMiddleColumn();
+	checkRightColumn();
+}
+
+// stop any new changes to the board
+function win() {
+    document.getElementById("label").innerHTML = "Winner: " + currentPlayer;
+	currentPlayer = 3;
+}
+
+// Horizontal wins
+function checkMiddleRow() {
+	checkForThreeInARow("middleLeft", "middleCentre", "middleRight");
+}
+
+function checkTopRow() {
+	checkForThreeInARow("topLeft", "topCentre", "topRight");
+}
+
+function checkBottomRow() {
+	checkForThreeInARow("bottomLeft", "bottomCentre", "bottomRight");
+}
+
+// Vertical wins
+function checkLeftColumn() {
+	checkForThreeInARow("topLeft", "middleLeft", "bottomLeft");
+}
+
+function checkMiddleColumn() {
+	checkForThreeInARow("topCentre", "middleCentre", "bottomCentre");
+}
+
+function checkRightColumn() {
+	checkForThreeInARow("topRight", "middleRight", "bottomRight");
+}
+
+// Diagonal wins
+function checkForwardSlash() {
+	checkForThreeInARow("bottomLeft", "middleCentre", "topRight");
+}
+
+function checkBackSlash() {
+	checkForThreeInARow("topLeft", "middleCentre", "bottomRight");
+}
+
+// Display win
+function hightlightWinningCells(cells) {
+	for (i = 0; i < cells.length; i++) {
+		document.getElementById(cells[i]).style.backgroundImage=winningImages[currentPlayer];
+	}
+	win();
+}
+
+function checkForThreeInARow(first, second, third) {
+	if ((boardTracker[first] == currentPlayer) && (boardTracker[second] == currentPlayer) && (boardTracker[third] == currentPlayer)) {
+		hightlightWinningCells([first, second, third]);
+	}
+}
